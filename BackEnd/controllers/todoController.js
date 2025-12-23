@@ -27,7 +27,7 @@ exports.createTodo = async (req, res) => {
 };
 
 // Update todo status (by id)
-exports.updateTodo = async (req, res) => {
+exports.toggleTodo = async (req, res) => {
     try {
         const { id } = req.params;
         const todo = await todo.findByPk(id);
@@ -39,4 +39,15 @@ exports.updateTodo = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: "failed to update todo"});
     }
-}
+};
+
+// Delete Todo (by id)
+exports.deleteTodo = async (req, res) => {
+    try {
+        const { id } = req.params;
+        await todo.destory({ where: { id}});
+        res.json({ message: "todo deleted"});
+    } catch (error) {
+        res.status(500).json({ message: "Failed to delete todo"});
+    }
+};
