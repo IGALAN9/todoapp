@@ -34,7 +34,7 @@ exports.toggleTodo = async (req, res) => {
     if (!todos) return res.status(404).json({ message: "Not found" });
 
     // Toggle true/false
-    await todos.update({ isDone: !todo.isDone });
+    await todos.update({ isDone: !todos.isDone });
     res.json(todos);
   } catch (err) {
     res.status(500).json({ message: err.message });
