@@ -28,24 +28,24 @@ exports.createTodo = async (req, res) => {
 
 // Update todo status (by id)
 exports.toggleTodo = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const todo = await todo.findByPk(id);
-        if (!todo) return res.status(404).json({ message: "todo not found"});
+  try {
+    const { id } = req.params;
+    const todos = await todo.findByPk(id);
+    if (!todos) return res.status(404).json({ message: "Not found" });
 
-        //toggle true or false
-        await todo.update({ isDone: !!todo.isDone});
-        res.json(todo);
-    } catch (error) {
-        res.status(500).json({ message: "failed to update todo"});
-    }
+    // Toggle true/false
+    await todos.update({ isDone: !todo.isDone });
+    res.json(todos);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
 // Delete Todo (by id)
 exports.deleteTodo = async (req, res) => {
     try {
         const { id } = req.params;
-        await todo.destory({ where: { id}});
+        await todo.destroy({ where: { id}});
         res.json({ message: "todo deleted"});
     } catch (error) {
         res.status(500).json({ message: "Failed to delete todo"});
